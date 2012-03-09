@@ -478,7 +478,7 @@ Function ConstructVideoClip(serverUrl as String, videoUrl as String, sourceUrl A
 	print "Setting stream quality:";quality
 	videoclip = CreateObject("roAssociativeArray")
     videoclip.StreamBitrates = [0]
-    videoclip.StreamUrls = [videoUrl]
+    videoclip.StreamUrls = [serverUrl + videoUrl]
     videoclip.StreamQualities = [quality]
     videoclip.StreamFormat = "mp4"
     videoclip.Title = title
