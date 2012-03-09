@@ -365,23 +365,21 @@ Function constructVideoScreen(metadata, mediaData, StartTime As Integer) As Obje
     videoclip = ConstructVideoClip(m.serverUrl, mediaKey, metadata.sourceUrl, metadata.ratingKey, metadata.key, metadata.title, "", "")
     videoclip.PlayStart = StartTime
     video.SetContent(videoclip)
-    m.Cookie = StartTranscodingSession(videoclip.StreamUrls[0])
-	video.AddHeader("Cookie", m.Cookie)
-	return video
+    return video
 End Function
 
 Function stopTranscode()
-	stopTransfer = CreateObject("roUrlTransfer")
-    stopTransfer.SetUrl(m.serverUrl + "/video/:/transcode/segmented/stop")
-    stopTransfer.AddHeader("Cookie", m.Cookie) 
-    content = stopTransfer.GetToString()
+'	stopTransfer = CreateObject("roUrlTransfer")
+'    stopTransfer.SetUrl(m.serverUrl + "/video/:/transcode/segmented/stop")
+'    stopTransfer.AddHeader("Cookie", m.Cookie) 
+'    content = stopTransfer.GetToString()
 End Function
 
 Function pingTranscode()
-	pingTransfer = CreateObject("roUrlTransfer")
-    pingTransfer.SetUrl(m.serverUrl + "/video/:/transcode/segmented/ping")
-    pingTransfer.AddHeader("Cookie", m.Cookie) 
-    content = pingTransfer.GetToString()
+'	pingTransfer = CreateObject("roUrlTransfer")
+'    pingTransfer.SetUrl(m.serverUrl + "/video/:/transcode/segmented/ping")
+'    pingTransfer.AddHeader("Cookie", m.Cookie) 
+'    content = pingTransfer.GetToString()
 End Function
 
 '* Constructs a Full URL taking into account relative/absolute. Relative to the 
@@ -463,11 +461,11 @@ End Function
 '* the resultant session ID from the cookie that can then be used to
 '* access and stop the transcoding
 Function StartTranscodingSession(videoUrl) As String
-	cookiesRequest = CreateObject("roUrlTransfer")
-	cookiesRequest.SetUrl(videoUrl)
-	cookiesHead = cookiesRequest.Head()
-	cookieHeader = cookiesHead.GetResponseHeaders()["set-cookie"]
-	return cookieHeader
+'	cookiesRequest = CreateObject("roUrlTransfer")
+'	cookiesRequest.SetUrl(videoUrl)
+'	cookiesHead = cookiesRequest.Head()
+'	cookieHeader = cookiesHead.GetResponseHeaders()["set-cookie"]
+'	return cookieHeader
 End Function
 
 '* Roku video clip definition as an array
@@ -480,9 +478,9 @@ Function ConstructVideoClip(serverUrl as String, videoUrl as String, sourceUrl A
 	print "Setting stream quality:";quality
 	videoclip = CreateObject("roAssociativeArray")
     videoclip.StreamBitrates = [0]
-    videoclip.StreamUrls = [TranscodingVideoUrl(serverUrl, videoUrl, sourceUrl, ratingKey, key, httpCookies, userAgent)]
+    videoclip.StreamUrls = [videoUrl]
     videoclip.StreamQualities = [quality]
-    videoclip.StreamFormat = "hls"
+    videoclip.StreamFormat = "mp4"
     videoclip.Title = title
     return videoclip
 End Function
